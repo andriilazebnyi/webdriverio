@@ -1,3 +1,5 @@
+var path = require('path')
+
 module.exports = function (grunt) {
     var argv = require('optimist').argv
 
@@ -6,12 +8,17 @@ module.exports = function (grunt) {
         report: ['lcov', 'html'],
         excludes: ['**/scripts/**', '**/gruntfile.js'],
         verbose: true,
-        mochaOptions: ['--compilers', 'js:babel/register', '--recursive', '-t', '120000', '--reporter', 'spec']
+        mochaOptions: [
+            '--compilers', 'js:babel-register',
+            '--recursive',
+            '--timeout', '120000',
+            '--reporter', 'dot'
+        ]
     }
 
     var mochaOpts = {
         reporter: 'spec',
-        require: ['babel/register'],
+        require: ['babel-register'],
         grep: argv.grep,
         invert: argv.invert,
         bail: argv.bail,
@@ -26,9 +33,6 @@ module.exports = function (grunt) {
         pkgFile: 'package.json',
         clean: ['build'],
         babel: {
-            options: {
-                optional: ['runtime']
-            },
             commands: {
                 files: [{
                     expand: true,
@@ -127,7 +131,7 @@ module.exports = function (grunt) {
             options: {
                 parser: 'babel-eslint'
             },
-            target: ['lib/**/*.js', '!test/spec', '!test/conf']
+            target: ['lib/**/*.js', 'test/spec', '!test/conf']
         },
         contributors: {
             options: {
@@ -212,12 +216,12 @@ module.exports = function (grunt) {
             process.env._PLATFORM = 'iOS'
             process.env._VERSION = '9.2'
             process.env._DEVICENAME = 'iPhone 6'
-            process.env._APP = __dirname + '/test/site/platforms/ios/build/emulator/WebdriverJS Example Phonegap Application.app'
+            process.env._APP = path.join(__dirname, '/test/site/platforms/ios/build/emulator/WebdriverJS Example Phonegap Application.app')
         } else if (!process.env.CI && env === 'android') {
             process.env._PLATFORM = 'Android'
             process.env._VERSION = '4.4'
             process.env._DEVICENAME = 'Samsung Galaxy S4 Emulator'
-            process.env._APP = __dirname + '/test/site/platforms/android/build/outputs/apk/android-debug.apk'
+            process.env._APP = path.join(__dirname, '/test/site/platforms/android/build/outputs/apk/android-debug.apk')
         }
 
         var tasks = ['connect', cmd + ':' + env]

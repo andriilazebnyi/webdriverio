@@ -27,9 +27,22 @@ describe('launcher', () => {
             let launcher = new Launcher(path.join(FIXTURE_ROOT, 'suite.wdio.conf.js'), {
                 suite: 'foo'
             })
+            expect(() => launcher.configParser.getSpecs()).to.throw(/The suite\(s\) "foo" you specified don't exist/)
+        })
+
+        it('should allow to pass spec as cli argument to run only once test file', () => {
+            let launcher = new Launcher(path.join(FIXTURE_ROOT, 'suite.wdio.conf.js'), {
+                spec: './test/spec/unit/launcher.js'
+            })
             let specs = launcher.configParser.getSpecs()
             specs.should.have.length(1)
-            specs[0].should.endWith('index.js')
+            specs[0].should.endWith('/test/spec/unit/launcher.js')
+        })
+
+        it('should throw if specified spec file doesnt exist', () => {
+            expect(() => new Launcher(path.join(FIXTURE_ROOT, 'suite.wdio.conf.js'), {
+                spec: './foobar.js'
+            })).to.throw(/spec file \.\/foobar\.js not found/)
         })
     })
 

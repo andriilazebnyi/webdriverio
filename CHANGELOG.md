@@ -1,10 +1,52 @@
 # CHANGELOG
 
+## v4.2.10 (2016-08-31)
+* global changes:
+    * keep command files in package to be able to generate docs
+
+## v4.2.9 (2016-08-31)
+* global changes:
+    * docs improvements
+    * bug fixes
+* WDIO changes:
+    * Split hooks into their own collection instead of grouping with tests (#1561)
+
+## v4.2.8 (2016-08-23)
+* global changes:
+    * allow to specify selector strategies directly when using the format:
+      "<selector strategy>:<selector>"
+
+## v4.2.7 (2016-08-17)
+* fixes broken v4.2.6
+
+## v4.2.6 (2016-08-17)
+* global changes:
+    * restrict files uploaded to NPM
+    * added screenshot event to internal events
+
+## v4.2.5 (2016-08-11)
+* WDIO changes
+    * allow spec as wdio argument
+
+## v4.2.4 (2016-08-11)
+* global changes:
+    * docs improvements
+    * updated request package dependency
+    * fixed moveTo bug always sitting at (0, 0)
+    * improved screenshot capturing after command errors
+    * id selector regex fix
+* multiremote:
+    * ensure onComplete to run after test
+
 ## v4.2.2 (2016-07-12)
 * global changes:
+    * updated dependencies
     * make sure waitUntil conditions get executed at least once
     * implemented first polyfills for safaridriver interaction API
     * fixed refresh/reload renaming bugs (#1445, #1446)
+* WDIO changes:
+    * allow to run single specs using `--spec` cli argument
+    * throw an error if suite was not found
 
 ## v4.2.1 (2016-07-09)
 * global changes:

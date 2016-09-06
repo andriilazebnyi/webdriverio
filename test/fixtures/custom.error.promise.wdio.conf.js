@@ -1,14 +1,16 @@
+var path = require('path')
+
 var chai = require('chai')
 var chaiString = require('chai-string')
 var chaiAsPromised = require('chai-as-promised')
 
 exports.config = {
-    specs: [__dirname + '/specs/throws.spec.js'],
+    specs: [path.join(__dirname, '/specs/throws.spec.js')],
     capabilities: [{
         browserName: 'phantomjs'
     }],
     mochaOpts: {
-        compilers: ['js:babel/register'],
+        compilers: ['js:babel-register'],
         timeout: 60000
     },
     before: function () {
@@ -20,8 +22,8 @@ exports.config = {
     },
     onError: function (e) {
         browser.lastError = e
-        return new Promise(function (r) {
-            setTimeout(r, 2000)
+        return new Promise(function (resolve) {
+            setTimeout(resolve, 2000)
         })
     }
 }
